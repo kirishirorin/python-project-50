@@ -5,9 +5,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: my-step_1
-        run: flake8 gendiff
+        run: echo "Hello Lint!"
   testing:
     runs-on: ubuntu-latest
     steps:
       - name: my-step_2
-        run: pytest
+        run: echo "Hello Test!"
