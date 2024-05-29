@@ -5,7 +5,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: my-step_1
-        run: echo "Hello Lint!"
+        run: flake8 .
   testing:
     runs-on: ubuntu-latest
     steps:
