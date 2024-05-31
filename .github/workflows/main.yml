@@ -1,13 +1,12 @@
 name: checking
 on: push
 jobs:
-  linting:
-    runs-on: ubuntu-latest
-    steps:
-      - name: my-step_1
-        run: flake8 .
   testing:
     runs-on: ubuntu-latest
     steps:
+      - name: my-step_1
+        run: poetry install
       - name: my-step_2
-        run: pytest
+        run: poetry run flake8 gendiff
+      - name: my-step_3
+        run: poetry run pytest
