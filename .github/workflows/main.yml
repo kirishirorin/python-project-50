@@ -4,6 +4,8 @@ jobs:
   testing:
     runs-on: ubuntu-latest
     steps:
+      - name: my-step_0
+        run: pip install poetry
       - name: my-step_1
         run: poetry install
       - name: my-step_2
