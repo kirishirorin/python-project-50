@@ -14,3 +14,9 @@ jobs:
         run: poetry run flake8 gendiff
       - name: my-step_3
         run: poetry run pytest
+      - name: Publish code coverage
+        uses: paambaati/codeclimate-action@v5.0.0
+        env:
+          CC_TEST_REPORTER_ID: ${{secrets.CC_TEST_REPORTER_ID}}
+        with:
+          coverageCommand: make report
