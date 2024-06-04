@@ -1,21 +1,16 @@
 #!/usr/bin/env python3
 import argparse
-import json
+from gendiff.scripts.parsing import load_file
 
-
-parser = argparse.ArgumentParser(description='Compares two configuration files'
-                                 'and shows a difference.')
-parser.add_argument('first_file', type=str)
-parser.add_argument('second_file', type=str)
-parser.add_argument('-f', '--format', type=str, default='FORMAT',
+def read_bash():
+    parser = argparse.ArgumentParser(description='Compares two configuration files'
+                                     'and shows a difference.')
+    parser.add_argument('first_file', type=str)
+    parser.add_argument('second_file', type=str)
+    parser.add_argument('-f', '--format', type=str, default='FORMAT',
                     help='set format of output')
-args = parser.parse_args()
-
-
-def load_file(file):
-    with open(file, "r") as read_file:
-        data = json.load(read_file)
-        return data
+    args = parser.parse_args()
+    return args
 
 
 def generate_diff(first_path, second_path):
@@ -42,8 +37,9 @@ def generate_diff(first_path, second_path):
     text_sorted = sorted(text, key=lambda x: x[2])
     text_sorted.insert(0, '{')
     text_sorted.append('}')
-    return print('\n'.join(text_sorted))
+    return '\n'.join(text_sorted)
 
 
 if __name__ == '__main__':
-    generate_diff(args.first_file, args.second_file)
+    args = read_bash()
+    print(generate_diff(args.first_file, args.second_file))
