@@ -11,9 +11,9 @@ jobs:
       - name: my-step_1
         run: poetry install
       - name: my-step_2
-        run: poetry run flake8 gendiff
-      - name: my-step_3
         run: poetry run pytest
+      - name: my-step_3
+        run: poetry run flake8 gendiff
       - name: Publish code coverage
         uses: paambaati/codeclimate-action@v5.0.0
         env:
