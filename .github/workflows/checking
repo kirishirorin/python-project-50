@@ -1,0 +1,13 @@
+name: checking
+on: push
+jobs:
+  linting:
+    runs-on: ubuntu-latest
+    steps:
+      - name: my-step_1
+        run: make lint
+  testing:
+    runs-on: ubuntu-latest
+    steps:
+      - name: my-step_2
+        run: poetry run pytestx
