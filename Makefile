@@ -5,10 +5,10 @@ build:
 	poetry build
 
 _gendiff_json:
-	poetry run python -m gendiff.scripts.gendiff file1.json file2.json
+	poetry run python -m gendiff.scripts.gendiff tests/fixtures/json/file1.json tests/fixtures/json/file2.json
 
 _gendiff_yaml:
-	poetry run python -m gendiff.scripts.gendiff file1.yaml file2.yaml
+	poetry run python -m gendiff.scripts.gendiff tests/fixtures/yaml/file1.yaml tests/fixtures/yaml/file2.yaml
 
 testing:
 	poetry run pytest
