@@ -10,4 +10,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: my-step_2
-        run: poetry run pytestx
+        run: poetry run pytest
