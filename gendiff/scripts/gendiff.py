@@ -26,13 +26,13 @@ def read_bash():
     return args
 
 
-def generate_diff(file1, file2, format='stylish'):
+def generate_diff(path_file1, path_file2, format='stylish'):
+    file1 = load_file(path_file1)
+    file2 = load_file(path_file2)
     different = diff(file1, file2)
     return OPTION[format](different)
 
 
 if __name__ == '__main__':
     args = read_bash()
-    first_file_1 = load_file(args.first_file)
-    second_file_2 = load_file(args.second_file)
-    print(generate_diff(first_file_1, second_file_2, format=args.format))
+    print(generate_diff(args.first_file, args.second_file, format=args.format))
