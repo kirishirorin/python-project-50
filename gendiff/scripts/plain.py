@@ -1,20 +1,35 @@
 from gendiff.scripts.quote import form
 
 
-def plain(different, path=''):
+def hard(cond, different):
+    if cond:
+        return '[complex value]'
+    else:
+        return form(different)
+
+
+def check(cond):
+    return isinstance(cond, dict)
+
+
+def plain(dif, path=''):
     text = []
-    for key in different.keys():
-        if isinstance(different[key], dict):
-            if list(different[key].keys())[0] == 'remove':
-                text.append(f"Property '{path}{key}' was removed")
-            elif list(different[key].keys())[0] == 'add':
-                value = '[complex value]' if isinstance(different[key]['add'], dict) else form(different[key]['add'])
-                text.append(f"Property '{path}{key}' was added with value: {value}")
-            elif list(different[key].keys())[0] == 'update':
-                text.append(plain(different[key]['update'], path=f'{path}{key}.'))
+    st = 'Property '
+    for key in dif.keys():
+        if isinstance(dif[key], dict):
+            key_v = list(dif[key].keys())[0]
+            match key_v:
+                case 'remove':
+                    text.append(f"{st}'{path}{key}' was removed")
+                case 'add':
+                    value = hard(check(dif[key]['add']), dif[key]['add'])
+                    text.append(f"{st}'{path}{key}' "
+                                f"was added with value: {value}")
+                case 'update':
+                    text.append(plain(dif[key]['update'], path=f'{path}{key}.'))
         if key == 'before':
-            text.append(f"Property '{path[:-1]}' was updated. "
-                        f"From {'[complex value]' if isinstance(different['before'], dict) else form(different['before'])} "
-                        f"to {'[complex value]' if isinstance(different['after'], dict) else form(different['after'])}")
+            text.append(f"{st}'{path[:-1]}' was updated. "
+                        f"From {hard(check(dif['before']), dif['before'])} "
+                        f"to {hard(check(dif['after']), dif['after'])}")
     text_sorted = sorted(text, key=lambda x: x)
     return '\n'.join(text_sorted)

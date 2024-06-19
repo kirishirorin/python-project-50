@@ -21,26 +21,34 @@ def stylish(different, deeper=1):
     deeper_level = deeper * 4 - 2
     for key in different.keys():
         if isinstance(different[key], dict):
-            if list(different[key].keys())[0] == 'remove':
-                text.append(f"{' ' * deeper_level}- {key}: "
-                            f"{treeing(different[key]['remove'], deeper + 1)}")
-            elif list(different[key].keys())[0] == 'add':
-                text.append(f"{' ' * deeper_level}+ {key}: "
-                            f"{treeing(different[key]['add'], deeper + 1)}")
-            elif list(different[key].keys())[0] == 'update':
-                if list(different[key]['update'].keys())[0] != 'before':
-                    text.append(f"{' ' * deeper_level}  {key}: "
-                                f"{stylish(different[key]['update'], deeper + 1)}")
-                else:
+            key_v = list(different[key].keys())[0]
+            match key_v:
+                case 'remove':
+                    d_rm = treeing(different[key]['remove'], deeper + 1)
                     text.append(f"{' ' * deeper_level}- {key}: "
-                                f"{stylish(different[key]['update'], deeper + 1)[0]}")
+                                f"{d_rm}")
+                case 'add':
+                    d_ad = treeing(different[key]['add'], deeper + 1)
                     text.append(f"{' ' * deeper_level}+ {key}: "
-                                f"{stylish(different[key]['update'], deeper + 1)[1]}")
-            elif list(different[key].keys())[0] == 'unchanged':
-                text.append(f"{' ' * deeper_level}  {key}: "
-                            f"{treeing(different[key]['unchanged'], deeper + 1)}")
+                                f"{d_ad}")
+                case 'update':
+                    d_up = different[key]['update']
+                    if list(d_up.keys())[0] != 'before':
+                        text.append(f"{' ' * deeper_level}  {key}: "
+                                    f"{stylish(d_up, deeper + 1)}")
+                    else:
+                        text.append(f"{' ' * deeper_level}- {key}: "
+                                    f"{stylish(d_up, deeper + 1)[0]}")
+                        text.append(f"{' ' * deeper_level}+ {key}: "
+                                    f"{stylish(d_up, deeper + 1)[1]}")
+                case 'unchanged':
+                    d_un = treeing(different[key]['unchanged'], deeper + 1)
+                    text.append(f"{' ' * deeper_level}  {key}: "
+                                f"{d_un}")
         if key == 'before':
-            return (treeing(different['before'], deeper), treeing(different['after'], deeper))
+            d_be = treeing(different['before'], deeper)
+            d_af = treeing(different['after'], deeper)
+            return (d_be, d_af)
     text_sorted = sorted(text, key=lambda x: x[deeper_level + 2:(x.index(':'))])
     text_sorted.insert(0, "{")
     text_sorted.append((" " * (deeper_level - 2)) + "}")
