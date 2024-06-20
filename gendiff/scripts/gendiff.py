@@ -33,6 +33,10 @@ def generate_diff(path_file1, path_file2, format='stylish'):
     return OPTION[format](different)
 
 
-if __name__ == '__main__':
+def main():
     args = read_bash()
     print(generate_diff(args.first_file, args.second_file, format=args.format))
+
+
+if __name__ == '__main__':
+    main()
