@@ -1,4 +1,4 @@
-def diff(file1, file2):
+def show_diff(file1, file2):
     if isinstance(file1, dict) and isinstance(file2, dict):
         set_file_1 = set(file1.keys()) - set(file2.keys())
         set_file_2 = set(file2.keys()) - set(file1.keys())
@@ -12,7 +12,7 @@ def diff(file1, file2):
             if file1[key] == file2[key]:
                 differences.update({key: {"unchanged": file2[key]}})
             else:
-                differences.update({key: {"update": diff(file1[key],
+                differences.update({key: {"update": show_diff(file1[key],
                                     file2[key])}})
         return differences
     else:

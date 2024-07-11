@@ -3,7 +3,7 @@ from gendiff.functions.parsing import load_file
 from gendiff.formatters.json import json_f
 from gendiff.formatters.stylish import stylish
 from gendiff.formatters.plain import plain
-from gendiff.functions.diff import diff
+from gendiff.functions.diff import show_diff
 
 
 FORMATS = {
@@ -16,11 +16,11 @@ FORMATS = {
 def generate_diff(path_file1, path_file2, format='stylish'):
     file1 = load_file(path_file1)
     file2 = load_file(path_file2)
-    different = diff(file1, file2)
+    different = show_diff(file1, file2)
     return FORMATS[format](different)
 
 
-def command_line():
+def read_command_line():
     parser = argparse.ArgumentParser(description='Compares '
                                      'two configuration files'
                                      'and shows a difference.')
