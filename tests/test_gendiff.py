@@ -5,6 +5,8 @@ import pytest
 
 JSON_PATH = 'tests/fixtures/json'
 YAML_PATH = 'tests/fixtures/yaml'
+
+
 @pytest.mark.parametrize(
     "file1,file2,path,format",
     [
